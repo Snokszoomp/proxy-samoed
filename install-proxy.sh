@@ -92,9 +92,6 @@ ExecStart=/usr/local/bin/3proxy /etc/3proxy/3proxy.cfg
 Restart=always
 RestartSec=3
 LimitNOFILE=65536
-User=proxy3
-Group=proxy3
-AmbientCapabilities=CAP_NET_BIND_SERVICE
 
 [Install]
 WantedBy=multi-user.target
