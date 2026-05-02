@@ -16,8 +16,10 @@ fi
 
 # ---------- config ----------
 PROXY_PORT="${PROXY_PORT:-1080}"
-PROXY_USER="${PROXY_USER:-user$(tr -dc 'a-z0-9' </dev/urandom | head -c4)}"
-PROXY_PASS="${PROXY_PASS:-$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c16)}"
+# openssl is preinstalled on Ubuntu; avoids SIGPIPE issues with `tr | head`
+command -v openssl >/dev/null || apt-get install -yqq openssl
+PROXY_USER="${PROXY_USER:-user$(openssl rand -hex 2)}"
+PROXY_PASS="${PROXY_PASS:-$(openssl rand -hex 8)}"
 THREEPROXY_VER="0.9.5"
 
 log() { echo -e "\033[1;32m[+]\033[0m $*"; }
