@@ -53,9 +53,7 @@ log "Writing 3proxy config..."
 mkdir -p /etc/3proxy /var/log/3proxy
 
 cat >/etc/3proxy/3proxy.cfg <<EOF
-# 3proxy config - SOCKS5 only
-daemon
-pidfile /run/3proxy.pid
+# 3proxy config - SOCKS5 only (runs in foreground, managed by systemd)
 nserver 1.1.1.1
 nserver 8.8.8.8
 nscache 65536
@@ -89,8 +87,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-Type=forking
-PIDFile=/run/3proxy.pid
+Type=simple
 ExecStart=/usr/local/bin/3proxy /etc/3proxy/3proxy.cfg
 Restart=always
 RestartSec=3
